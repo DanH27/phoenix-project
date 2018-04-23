@@ -16,18 +16,14 @@ defmodule PhoenixFinal.Router do
 
 
 
-  scope "/", PhoenixFinal do pipe_through :browser
-    get "/", PageController, :index
-    resources "/users", UserController, only: [:index, :show, :new, :create]
-  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug PhoenixFinal.Auth,
-    repo: PhoenixFinal.Repo
+    plug PhoenixFinal.Auth, repo: PhoenixFinal.Repo
   end
   scope "/", PhoenixFinal do
     pipe_through :browser # Use the default browser stack

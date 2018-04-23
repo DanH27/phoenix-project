@@ -1,4 +1,5 @@
-defmodule PhoenixFinal.SessionController do use PhoenixFinal.Web, :controller
+defmodule PhoenixFinal.SessionController do
+  use PhoenixFinal.Web, :controller
   def new(conn, _) do
     render conn, "new.html"
   end
@@ -14,5 +15,9 @@ defmodule PhoenixFinal.SessionController do use PhoenixFinal.Web, :controller
         |> put_flash(:error, "Invalid username/password combination")
         |> render("new.html")
     end
+  end
+  def delete(conn, _) do conn
+    |> PhoenixFinal.Auth.logout()
+    |> redirect(to: page_path(conn, :index))
   end
 end

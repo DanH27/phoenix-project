@@ -1,5 +1,6 @@
 defmodule PhoenixFinal.UserController do
   use PhoenixFinal.Web, :controller
+  alias PhoenixFinal.User
 
   def index(conn, _params) do
     users = Repo.all(PhoenixFinal.User)
@@ -11,7 +12,6 @@ defmodule PhoenixFinal.UserController do
     render conn, "show.html", user: user
   end
 
-  alias PhoenixFinal.User
   def new(conn, _params) do
     changeset = User.changeset(%User{})
     render conn, "new.html", changeset: changeset
@@ -39,12 +39,5 @@ end
       |> halt()
     end
   end
-  def index(conn, _params) do case authenticate(conn) do
-    %Plug.Conn{halted: true} = conn ->
-      conn
-    conn ->
-      users = Repo.all(User)
-      render conn, "index.html", users: users
-    end
-  end
+
 end
