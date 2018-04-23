@@ -13,17 +13,27 @@ defmodule PhoenixFinal.Router do
     plug :accepts, ["json"]
   end
 
+
+
+
+  scope "/", PhoenixFinal do pipe_through :browser
+    get "/", PageController, :index
+    resources "/users", UserController, only: [:index, :show, :new, :create]
+  end
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    plug PhoenixFinal.Auth,
+    repo: PhoenixFinal.Repo
+  end
   scope "/", PhoenixFinal do
     pipe_through :browser # Use the default browser stack
-
     get "/", PageController, :index
-  end
-
-  scope "/", PhoenixFinal do
-    pipe_through :browser
-    get "/users", UserController, :index
-    get "/users/:id", UserController, :show
-  #  get "/", PageController, :index
+    resources "/users", UserController, only: [:index, :show, :new, :create]
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
   # Other scopes may use custom stacks.
   # scope "/api", PhoenixFinal do

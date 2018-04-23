@@ -17,12 +17,6 @@ defmodule PhoenixFinal.Mixfile do
   # Configuration for the OTP application.
   #
   # Type `mix help compile.app` for more information.
-  def application do
-    [
-      mod: {PhoenixFinal, []},
-      extra_applications: [:logger]
-    ]
-  end
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
@@ -40,7 +34,8 @@ defmodule PhoenixFinal.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:comeonin, "~> 2.0"}
     ]
   end
 
@@ -56,5 +51,10 @@ defmodule PhoenixFinal.Mixfile do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "test": ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
+  end
+  def application do
+    [mod: {PhoenixFinal, []},
+    applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
+      :phoenix_ecto, :postgrex, :comeonin]]
   end
 end
