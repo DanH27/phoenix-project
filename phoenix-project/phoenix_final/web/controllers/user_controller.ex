@@ -17,18 +17,18 @@ defmodule PhoenixFinal.UserController do
     render conn, "new.html", changeset: changeset
   end
 
-def create(conn, %{"user" => user_params}) do
-  changeset = User.registration_changeset(%User{}, user_params)
-  case Repo.insert(changeset) do
-    {:ok, user} ->
-      conn
-    |> PhoenixFinal.Auth.login(user)
-    |> put_flash(:info, "#{user.name} created!")
-    |> redirect(to: user_path(conn, :index))
-  {:error, changeset} ->
-    render(conn, "new.html", changeset: changeset)
+  def create(conn, %{"user" => user_params}) do
+    changeset = User.registration_changeset(%User{}, user_params)
+    case Repo.insert(changeset) do
+      {:ok, user} ->
+        conn
+        |> PhoenixFinal.Auth.login(user)
+        |> put_flash(:info, "#{user.name} created!")
+        |> redirect(to: user_path(conn, :index))
+      {:error, changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
   end
-end
   defp authenticate(conn) do
     if conn.assigns.current_user do
       conn

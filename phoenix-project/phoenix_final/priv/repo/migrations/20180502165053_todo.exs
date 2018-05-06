@@ -6,9 +6,6 @@ defmodule PhoenixFinal.Repo.Migrations.Todo do
       add :task, :string
       add :title, :string, null: false
       add :day, :string, null: false
-
-
     end
-
   end
 end
