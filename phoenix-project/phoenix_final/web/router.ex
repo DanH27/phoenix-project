@@ -13,10 +13,6 @@ defmodule PhoenixFinal.Router do
     plug :accepts, ["json"]
   end
 
-
-
-
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -25,6 +21,7 @@ defmodule PhoenixFinal.Router do
     plug :put_secure_browser_headers
     plug PhoenixFinal.Auth, repo: PhoenixFinal.Repo
   end
+
   scope "/", PhoenixFinal do
     pipe_through :browser # Use the default browser stack
     get "/", PageController, :index
